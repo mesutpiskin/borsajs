@@ -1,0 +1,53 @@
+{
+    "name": "borsajs",
+    "version": "0.1.0",
+    "description": "Turkish financial markets data library - yfinance-like API for BIST stocks, forex, crypto, and more",
+    "type": "module",
+    "main": "dist/index.js",
+    "types": "dist/index.d.ts",
+    "exports": {
+        ".": {
+            "import": "./dist/index.js",
+            "types": "./dist/index.d.ts"
+        }
+    },
+    "scripts": {
+        "build": "tsc",
+        "dev": "tsc --watch",
+        "test": "node --experimental-vm-modules node_modules/jest/bin/jest.js",
+        "lint": "eslint src --ext .ts",
+        "prepublishOnly": "npm run build"
+    },
+    "keywords": [
+        "finance",
+        "stocks",
+        "bist",
+        "turkey",
+        "forex",
+        "crypto",
+        "market-data",
+        "yfinance"
+    ],
+    "author": "Mesut Piskin",
+    "license": "Apache-2.0",
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/mesutpiskin/borsajs"
+    },
+    "bugs": {
+        "url": "https://github.com/mesutpiskin/borsajs/issues"
+    },
+    "homepage": "https://github.com/mesutpiskin/borsajs#readme",
+    "engines": {
+        "node": ">=18.0.0"
+    },
+    "dependencies": {
+        "axios": "^1.6.0",
+        "cheerio": "^1.0.0-rc.12"
+    },
+    "devDependencies": {
+        "@types/node": "^20.10.0",
+        "tsx": "^4.21.0",
+        "typescript": "^5.3.0"
+    }
+}
