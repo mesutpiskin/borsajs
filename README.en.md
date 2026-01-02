@@ -190,20 +190,34 @@ for (const [symbol, ticker] of tickers) {
 
 ## Data Sources
 
-| Module | Source | Description |
-|--------|--------|-------------|
-| Ticker | Paratic | Stock data |
-| Index | Paratic | BIST indices |
-| FX | doviz.com | Forex, gold, commodities |
-| Crypto | BtcTurk | Cryptocurrency data |
-| Fund | TEFAS | Investment fund data |
-| Inflation | TCMB | Inflation data |
-| VIOP | İş Yatırım | Futures and options |
+This library accesses publicly available data from the following sources:
 
-## Disclaimer
+| Module | Source | Website | Description |
+|--------|--------|---------|-------------|
+| Ticker | Paratic | [paratic.com](https://www.paratic.com/) | Stock data |
+| Index | Paratic | [paratic.com](https://www.paratic.com/) | BIST indices |
+| FX | doviz.com | [doviz.com](https://www.doviz.com/) | Forex, gold, commodities |
+| Crypto | BtcTurk | [btcturk.com](https://www.btcturk.com/) | Cryptocurrency data |
+| Fund | TEFAS | [tefas.gov.tr](https://www.tefas.gov.tr/) | Investment fund data |
+| Inflation | TCMB | [tcmb.gov.tr](https://www.tcmb.gov.tr/) | Inflation data |
+| VIOP | İş Yatırım | [isyatirim.com.tr](https://www.isyatirim.com.tr/) | Futures and options |
+| Companies | KAP | [kap.org.tr](https://www.kap.org.tr/) | Company information |
 
-Data accessed through this library belongs to their respective sources. This library is intended for personal use only and data should not be used for commercial purposes.
+## ⚠️ Important Notices
+
+### About Data Sources
+Data accessed through this library belongs to the third-party sources listed above. The data is subject to the respective terms of service of each provider.
+
+### Commercial Use
+**This library is intended for personal and educational use only.**
+
+For commercial use:
+- You must obtain explicit permission from the respective data source providers
+- The authors of this library are not responsible for any unauthorized commercial use of data
+
+### Reference Project
+This project is a TypeScript port of the [borsapy](https://github.com/saidsurucu/borsapy) Python library.
 
 ## License
 
-Apache 2.0
+Apache 2.0 - See [LICENSE](LICENSE) file for details.

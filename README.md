@@ -42,16 +42,34 @@ const calculation = await inflation.calculate(100000, '2020-01', '2024-01');
 
 ## Veri Kaynakları
 
-| Modül | Kaynak | Açıklama |
-|-------|--------|----------|
-| Ticker | Paratic | Hisse verileri |
-| Index | Paratic | BIST endeksleri |
-| FX | doviz.com | Döviz kurları, altın, emtia |
-| Crypto | BtcTurk | Kripto para verileri |
-| Fund | TEFAS | Yatırım fonu verileri |
-| Inflation | TCMB | Enflasyon verileri |
-| VIOP | İş Yatırım | Vadeli işlem ve opsiyon |
+Bu kütüphane aşağıdaki kamuya açık veri kaynaklarından yararlanmaktadır:
+
+| Modül | Kaynak | Web Sitesi | Açıklama |
+|-------|--------|------------|----------|
+| Ticker | Paratic | [paratic.com](https://www.paratic.com/) | Hisse senedi verileri |
+| Index | Paratic | [paratic.com](https://www.paratic.com/) | BIST endeksleri |
+| FX | doviz.com | [doviz.com](https://www.doviz.com/) | Döviz kurları, altın, emtia |
+| Crypto | BtcTurk | [btcturk.com](https://www.btcturk.com/) | Kripto para verileri |
+| Fund | TEFAS | [tefas.gov.tr](https://www.tefas.gov.tr/) | Yatırım fonu verileri |
+| Inflation | TCMB | [tcmb.gov.tr](https://www.tcmb.gov.tr/) | Enflasyon verileri |
+| VIOP | İş Yatırım | [isyatirim.com.tr](https://www.isyatirim.com.tr/) | Vadeli işlem ve opsiyon |
+| Companies | KAP | [kap.org.tr](https://www.kap.org.tr/) | Şirket bilgileri ve bildirimleri |
+
+## ⚠️ Önemli Uyarılar
+
+### Veri Kaynakları Hakkında
+Bu kütüphane aracılığıyla erişilen veriler, yukarıda listelenen üçüncü taraf kaynaklara aittir. Veriler ilgili kaynakların kullanım koşullarına tabidir.
+
+### Ticari Kullanım
+**Bu kütüphane yalnızca kişisel ve eğitim amaçlı kullanım için tasarlanmıştır.**
+
+Ticari kullanım için:
+- İlgili veri kaynağı sağlayıcılarından açık izin almanız gerekmektedir
+- Bu kütüphanenin yazarları, verilerin izinsiz ticari kullanımından sorumlu değildir
+
+### Referans Proje
+Bu proje, [borsapy](https://github.com/saidsurucu/borsapy) Python kütüphanesinden ilham alınarak TypeScript'e port edilmiştir.
 
 ## Lisans
 
-Apache 2.0
+Apache 2.0 - Detaylar için [LICENSE](LICENSE) dosyasına bakınız.

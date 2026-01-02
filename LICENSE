@@ -199,3 +199,36 @@
    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
    See the License for the specific language governing permissions and
    limitations under the License.
+
+================================================================================
+                        DATA SOURCES AND ATTRIBUTION
+================================================================================
+
+This project is a TypeScript/JavaScript port of borsapy:
+https://github.com/saidsurucu/borsapy
+
+This library accesses publicly available data from the following sources:
+
+- Paratic (https://www.paratic.com/) - Stock and index data
+- doviz.com (https://www.doviz.com/) - Forex, gold, and commodity data
+- BtcTurk (https://www.btcturk.com/) - Cryptocurrency data
+- TEFAS (https://www.tefas.gov.tr/) - Investment fund data
+- TCMB (https://www.tcmb.gov.tr/) - Inflation data
+- KAP (https://www.kap.org.tr/) - Company information
+- İş Yatırım (https://www.isyatirim.com.tr/) - Derivatives (VIOP) data
+
+================================================================================
+                        IMPORTANT NOTICE FOR COMMERCIAL USE
+================================================================================
+
+The data accessed through this library is provided by third-party sources
+and is subject to their respective terms of service. This library is
+provided for personal and educational use only.
+
+FOR COMMERCIAL USE:
+You must obtain explicit permission from the respective data source providers
+before using their data for commercial purposes. The authors of this library
+are not responsible for any unauthorized commercial use of data.
+
+All trademarks, service marks, and company names are the property of their
+respective owners.
