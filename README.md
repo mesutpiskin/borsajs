@@ -1,5 +1,7 @@
 # borsajs
 
+**[Türkçe](README.md) | [English](README.en.md)**
+
 > **TypeScript/JavaScript port of [borsapy](https://github.com/saidsurucu/borsapy)** - Python versiyonundan ilham alınarak geliştirilmiştir.
 
 Türk finansal piyasaları için TypeScript/JavaScript veri kütüphanesi. BIST hisseleri, döviz, kripto, yatırım fonları ve ekonomik veriler için yfinance benzeri API.
@@ -16,26 +18,26 @@ npm install borsajs
 import { Ticker, FX, Crypto, Fund, Inflation, download } from 'borsajs';
 
 // Hisse senedi verisi
-const hisse = new Ticker('THYAO');
-const info = await hisse.getInfo();
-const history = await hisse.getHistory({ period: '1mo' });
+const stock = new Ticker('THYAO');
+const info = await stock.getInfo();
+const history = await stock.getHistory({ period: '1mo' });
 
 // Döviz
 const usd = new FX('USD');
-const kur = await usd.getCurrent();
+const rate = await usd.getCurrent();
 
 // Kripto
 const btc = new Crypto('BTCTRY');
 const price = await btc.getCurrent();
 
 // Yatırım fonu
-const fon = new Fund('AAK');
-const fonInfo = await fon.getInfo();
+const fund = new Fund('AAK');
+const fundInfo = await fund.getInfo();
 
 // Enflasyon
-const enf = new Inflation();
-const latest = await enf.getLatest();
-const calc = await enf.calculate(100000, '2020-01', '2024-01');
+const inflation = new Inflation();
+const latest = await inflation.getLatest();
+const calculation = await inflation.calculate(100000, '2020-01', '2024-01');
 ```
 
 ## Veri Kaynakları

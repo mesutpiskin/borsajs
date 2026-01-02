@@ -30,7 +30,7 @@ async function testFX() {
         console.log('USD/TRY Current:', JSON.stringify(current, null, 2));
         const gold = new FX('gram-altin');
         const goldCurrent = await gold.getCurrent();
-        console.log('\nGram Altın Current:', JSON.stringify(goldCurrent, null, 2));
+        console.log('\nGold (gram) Current:', JSON.stringify(goldCurrent, null, 2));
     } catch (error) { console.error('FX Error:', error); }
 }
 
@@ -38,8 +38,8 @@ async function testTicker() {
     console.log('\n📈 Testing Ticker (Paratic)...');
     console.log('─'.repeat(50));
     try {
-        const thyao = new Ticker('THYAO');
-        const info = await thyao.getInfo();
+        const stock = new Ticker('THYAO');
+        const info = await stock.getInfo();
         console.log('THYAO Info:', JSON.stringify(info, null, 2));
     } catch (error) { console.error('Ticker Error:', error); }
 }
@@ -73,13 +73,13 @@ async function testInflation() {
     console.log('\n📉 Testing Inflation (TCMB)...');
     console.log('─'.repeat(50));
     try {
-        const inf = new Inflation();
-        const latest = await inf.getLatest();
-        console.log('Latest TUFE:', JSON.stringify(latest, null, 2));
-        const tufe = await inf.getTufe({ limit: 3 });
-        console.log('\nTUFE last 3 months:', JSON.stringify(tufe, null, 2));
-        const calc = await inf.calculate(100000, '2020-01', '2024-01');
-        console.log('\n100,000 TL (2020-01 → 2024-01):', JSON.stringify(calc, null, 2));
+        const inflation = new Inflation();
+        const latest = await inflation.getLatest();
+        console.log('Latest CPI:', JSON.stringify(latest, null, 2));
+        const cpi = await inflation.getTufe({ limit: 3 });
+        console.log('\nCPI last 3 months:', JSON.stringify(cpi, null, 2));
+        const calculation = await inflation.calculate(100000, '2020-01', '2024-01');
+        console.log('\n100,000 TL (2020-01 → 2024-01):', JSON.stringify(calculation, null, 2));
     } catch (error) { console.error('Inflation Error:', error); }
 }
 
