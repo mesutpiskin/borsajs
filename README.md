@@ -4,7 +4,7 @@
 
 > **TypeScript/JavaScript port of [borsapy](https://github.com/saidsurucu/borsapy)** - Python versiyonundan ilham alınarak geliştirilmiştir.
 
-Türk finansal piyasaları için TypeScript/JavaScript veri kütüphanesi. BIST hisseleri, döviz, kripto, yatırım fonları ve ekonomik veriler için yfinance benzeri API.
+Türkiye finansal piyasaları için TypeScript/JavaScript veri kütüphanesi. BIST hisseleri, döviz, kripto, yatırım fonları ve ekonomik veriler için yfinance benzeri API.
 
 ## Kurulum
 
