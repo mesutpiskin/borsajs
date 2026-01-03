@@ -22,7 +22,8 @@ export { Inflation } from './inflation.js';
 
 export { VIOP } from './viop.js';
 
-export { companies, searchCompanies } from './market.js';
+export { symbols, searchSymbols, cryptoSymbols, fxSymbols, indexSymbols } from './market.js';
+export type { FXSymbol, IndexSymbol, StockSymbol, Company } from './market.js';
 
 export { BorsajsError, TickerNotFoundError, DataNotAvailableError, APIError, AuthenticationError, RateLimitError, InvalidPeriodError, InvalidIntervalError } from './exceptions.js';
 
@@ -33,6 +34,6 @@ export type { TickerData } from './providers/btcturk.js';
 export type { FXCurrentData, FXHistoryData } from './providers/dovizcom.js';
 export type { FundInfo, FundHistoryData, SearchResult } from './providers/tefas.js';
 export type { InflationLatest, InflationData, InflationCalculation } from './providers/tcmb.js';
-export type { ContractData, Company, Disclosure } from './providers/kap.js';
+export type { ContractData, Disclosure } from './providers/kap.js';
 
 export const VERSION = '0.1.0';

@@ -1,7 +1,7 @@
 {
     "name": "borsajs",
-    "version": "0.1.1",
-    "description": "Turkish financial markets data library - yfinance-like API for BIST stocks, forex, crypto, and more",
+    "version": "0.1.2",
+    "description": "Turkey financial markets data library, BIST stocks, forex, crypto, investment funds, and more",
     "type": "module",
     "main": "dist/index.js",
     "types": "dist/index.d.ts",
@@ -24,8 +24,11 @@
         "turkey",
         "forex",
         "crypto",
-        "market-data",
-        "yfinance"
+        "investment-funds",
+        "economic-indicators",
+        "macroeconomic-indicators",
+        "türkiye",
+        "market-data"
     ],
     "author": "Mesut Piskin",
     "license": "Apache-2.0",

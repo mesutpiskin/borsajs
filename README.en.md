@@ -2,9 +2,7 @@
 
 **[Türkçe](README.md) | [English](README.en.md)**
 
-> **TypeScript/JavaScript port of [borsapy](https://github.com/saidsurucu/borsapy)** - Inspired by the Python version.
-
-A TypeScript/JavaScript data library for Turkish financial markets. yfinance-like API for BIST stocks, forex, crypto, investment funds, and economic data.
+A TypeScript/JavaScript data library for Turkey financial markets. yfinance-like API for BIST stocks, forex, crypto, investment funds, and economic data.
 
 ## Installation
 
@@ -15,32 +13,29 @@ npm install borsajs
 ## Quick Start
 
 ```typescript
-import { Ticker, FX, Crypto, Fund, Inflation, download } from 'borsajs';
+import { Ticker, FX, Crypto, Fund, Inflation, symbols, cryptoSymbols } from 'borsajs';
 
 // Stock data
 const stock = new Ticker('THYAO');
 const info = await stock.getInfo();
-const history = await stock.getHistory({ period: '1mo' });
+// → { symbol: 'THYAO', last: 274.25, change: 5.75, changePercent: 2.14, ... }
 
 // Forex
 const usd = new FX('USD');
 const rate = await usd.getCurrent();
+// → { symbol: 'USD', last: 43.02, updateTime: '2026-01-02T20:59:58.000Z' }
 
 // Crypto
 const btc = new Crypto('BTCTRY');
 const price = await btc.getCurrent();
+// → { symbol: 'BTCTRY', last: 3839080, bid: 3839136, ask: 3840481, ... }
 
-// Investment fund
-const fund = new Fund('AAK');
-const fundInfo = await fund.getInfo();
-
-// Inflation
-const inflation = new Inflation();
-const latest = await inflation.getLatest();
-const calculation = await inflation.calculate(100000, '2020-01', '2024-01');
+// Symbol lists
+const stockList = symbols();              // → ['AKBNK', 'ARCLK', 'ASELS', ...] (80 stocks)
+const cryptoList = await cryptoSymbols(); // → ['BTCTRY', 'ETHTRY', ...] (173 pairs)
 ```
 
-## Modules
+## API Reference
 
 ### Ticker (Stocks)
 
@@ -48,62 +43,122 @@ const calculation = await inflation.calculate(100000, '2020-01', '2024-01');
 import { Ticker } from 'borsajs';
 
 const stock = new Ticker('THYAO');
-
-// Current info
 const info = await stock.getInfo();
-console.log(info.last);           // Last price
-console.log(info.change);         // Change
-console.log(info.changePercent);  // Change %
-
-// Price history
-const daily = await stock.getHistory({ period: '1mo' });
-const hourly = await stock.getHistory({ period: '5d', interval: '1h' });
-const weekly = await stock.getHistory({ period: '1y', interval: '1wk' });
 ```
 
-### Index
+**Response:**
+```json
+{
+  "symbol": "THYAO",
+  "last": 274.25,
+  "open": 271,
+  "high": 274.25,
+  "low": 269.75,
+  "close": 268.5,
+  "volume": 7853192164.25,
+  "change": 5.75,
+  "changePercent": 2.14,
+  "updateTime": "2026-01-01T21:00:00.000Z",
+  "type": "stock"
+}
+```
 
+**History:**
 ```typescript
-import { Index, indices } from 'borsajs';
+const history = await stock.getHistory({ period: '5d', interval: '1d' });
+```
 
-// Available indices
-console.log(indices());  // ['XU100', 'XU050', ...]
-
-// Index data
-const xu100 = new Index('XU100');
-const info = await xu100.getInfo();
-const history = await xu100.getHistory({ period: '1mo' });
+```json
+[
+  {
+    "date": "2026-01-01T21:00:00.000Z",
+    "open": 271,
+    "high": 274.25,
+    "low": 269.75,
+    "close": 274.25,
+    "volume": 7853192164.25
+  }
+]
 ```
 
 ### FX (Forex & Commodities)
 
 ```typescript
-import { FX } from 'borsajs';
+import { FX, fxSymbols } from 'borsajs';
 
-// Exchange rates
+console.log(fxSymbols);
+// → ['USD', 'EUR', 'GBP', 'JPY', 'CHF', 'CAD', 'AUD', 'gram-altin', 'ceyrek-altin', ...]
+
 const usd = new FX('USD');
 const current = await usd.getCurrent();
-const history = await usd.getHistory({ period: '1mo' });
+```
 
-// Gold
-const gold = new FX('gram-altin');
-const quarter = new FX('ceyrek-altin');
-
-// Other: EUR, GBP, CHF, gumus (silver), BRENT, WTI
+**Response:**
+```json
+{
+  "symbol": "USD",
+  "last": 43.0237,
+  "open": 0,
+  "high": 0,
+  "low": 0,
+  "updateTime": "2026-01-02T20:59:58.000Z"
+}
 ```
 
 ### Crypto
 
 ```typescript
-import { Crypto, cryptoPairs } from 'borsajs';
+import { Crypto, cryptoSymbols } from 'borsajs';
 
-// Available pairs
-const pairs = await cryptoPairs();  // ['BTCTRY', 'ETHTRY', ...]
+const pairs = await cryptoSymbols('TRY');
+// → ['BTCTRY', 'ETHTRY', 'XRPTRY', ...] (173 pairs)
 
-// Bitcoin/TRY
 const btc = new Crypto('BTCTRY');
 const current = await btc.getCurrent();
-const history = await btc.getHistory({ period: '1mo' });
+```
+
+**Response:**
+```json
+{
+  "symbol": "BTCTRY",
+  "last": 3839080,
+  "open": 3822360,
+  "high": 3891234,
+  "low": 3793804,
+  "bid": 3839136,
+  "ask": 3840481,
+  "volume": 36.22,
+  "change": 18121,
+  "changePercent": 0.44,
+  "timestamp": 1767432414317
+}
+```
+
+### Index
+
+```typescript
+import { Index, indexSymbols } from 'borsajs';
+
+console.log(indexSymbols);
+// → ['XU100', 'XU050', 'XU030', 'XBANK', 'XUSIN', ...]
+
+const xu100 = new Index('XU100');
+const info = await xu100.getInfo();
+```
+
+**Response:**
+```json
+{
+  "symbol": "XU100",
+  "last": 11498.38,
+  "open": 11296.52,
+  "high": 11498.38,
+  "low": 11296.52,
+  "change": 236.86,
+  "changePercent": 2.1,
+  "name": "BIST 100",
+  "type": "index"
+}
 ```
 
 ### Fund (Investment Funds)
@@ -111,14 +166,22 @@ const history = await btc.getHistory({ period: '1mo' });
 ```typescript
 import { Fund, searchFunds } from 'borsajs';
 
-// Search funds
-const results = await searchFunds('bank');
-
-// Fund data
-const fund = new Fund('AAK');
+const results = await searchFunds('ak', 3);
+const fund = new Fund('AOY');
 const info = await fund.getInfo();
-const history = await fund.getHistory({ period: '1mo' });
-const performance = await fund.getPerformance();
+```
+
+**Response:**
+```json
+{
+  "fundCode": "AOY",
+  "name": "AK PORTFÖY ALTERNATİF ENERJİ YABANCI HİSSE SENEDİ FONU",
+  "price": 0.30568,
+  "fundSize": 785933047.54,
+  "investorCount": 34267,
+  "dailyReturn": -0.993,
+  "return1y": 77.59
+}
 ```
 
 ### Inflation
@@ -127,17 +190,51 @@ const performance = await fund.getPerformance();
 import { Inflation } from 'borsajs';
 
 const inflation = new Inflation();
-
-// Latest CPI data
 const latest = await inflation.getLatest();
-const cpi = await inflation.getTufe({ limit: 12 });
+const calc = await inflation.calculate(100000, '2020-01', '2024-01');
+```
 
-// PPI data
-const ppi = await inflation.getUfe({ limit: 12 });
+**Response (Latest):**
+```json
+{
+  "date": "2025-10-31",
+  "yearMonth": "11-2025",
+  "yearlyInflation": 31.07,
+  "monthlyInflation": 0.87,
+  "type": "TUFE"
+}
+```
 
-// Inflation calculator
-const result = await inflation.calculate(100000, '2020-01', '2024-01');
-console.log(`100,000 TL -> ${result.finalValue.toLocaleString()} TL`);
+**Response (Calculate):**
+```json
+{
+  "startDate": "2020-01",
+  "endDate": "2024-01",
+  "initialValue": 100000,
+  "finalValue": 444399.15,
+  "totalYears": 4,
+  "totalChange": 344.4,
+  "avgYearlyInflation": 45.19
+}
+```
+
+### Symbols
+
+```typescript
+import { symbols, searchSymbols, cryptoSymbols, fxSymbols, indexSymbols } from 'borsajs';
+
+// Stock symbols
+const stocks = symbols();           // → 80 stocks
+const banks = searchSymbols('BNK'); // → ['AKBNK', 'YKBNK', 'SKBNK']
+
+// Crypto symbols
+const crypto = await cryptoSymbols('TRY'); // → 173 pairs
+
+// FX symbols
+console.log(fxSymbols); // → 19 currencies/commodities
+
+// Index symbols
+console.log(indexSymbols); // → 19 indices
 ```
 
 ### VIOP (Derivatives)
@@ -146,29 +243,9 @@ console.log(`100,000 TL -> ${result.finalValue.toLocaleString()} TL`);
 import { VIOP } from 'borsajs';
 
 const viop = new VIOP();
-
-// Futures
 const futures = await viop.getFutures();
-const stockFutures = await viop.getStockFutures();
-const indexFutures = await viop.getIndexFutures();
-
-// Options
 const options = await viop.getOptions();
-
-// By symbol
-const thyaoDerivatives = await viop.getBySymbol('THYAO');
-```
-
-### Companies
-
-```typescript
-import { companies, searchCompanies } from 'borsajs';
-
-// All companies
-const all = await companies();
-
-// Search companies
-const banks = await searchCompanies('bank');
+const thyao = await viop.getBySymbol('THYAO');
 ```
 
 ### Download (Multiple Tickers)
@@ -176,16 +253,8 @@ const banks = await searchCompanies('bank');
 ```typescript
 import { download, Tickers } from 'borsajs';
 
-// Download multiple tickers
 const data = await download(['THYAO', 'GARAN', 'AKBNK'], { period: '1mo' });
-console.log(data['THYAO']);  // THYAO's OHLCV data
-
-// Tickers class
-const tickers = new Tickers('THYAO GARAN AKBNK');
-for (const [symbol, ticker] of tickers) {
-  const info = await ticker.getInfo();
-  console.log(`${symbol}: ${info.last}`);
-}
+console.log(data['THYAO']); // THYAO's OHLCV data
 ```
 
 ## Data Sources
@@ -201,19 +270,13 @@ This library accesses publicly available data from the following sources:
 | Fund | TEFAS | [tefas.gov.tr](https://www.tefas.gov.tr/) | Investment fund data |
 | Inflation | TCMB | [tcmb.gov.tr](https://www.tcmb.gov.tr/) | Inflation data |
 | VIOP | İş Yatırım | [isyatirim.com.tr](https://www.isyatirim.com.tr/) | Futures and options |
-| Companies | KAP | [kap.org.tr](https://www.kap.org.tr/) | Company information |
 
 ## ⚠️ Important Notices
-
-### About Data Sources
-Data accessed through this library belongs to the third-party sources listed above. The data is subject to the respective terms of service of each provider.
 
 ### Commercial Use
 **This library is intended for personal and educational use only.**
 
-For commercial use:
-- You must obtain explicit permission from the respective data source providers
-- The authors of this library are not responsible for any unauthorized commercial use of data
+For commercial use, you must obtain explicit permission from the respective data source providers.
 
 ### Reference Project
 This project is a TypeScript port of the [borsapy](https://github.com/saidsurucu/borsapy) Python library.
