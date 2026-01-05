@@ -177,6 +177,87 @@ const calc = await inflation.calculate(100000, '2020-01', '2024-01');
 }
 ```
 
+### KAP (Kamu Aydınlatma Platformu)
+
+```typescript
+import { getKapProvider } from 'borsajs';
+
+const kap = getKapProvider();
+const companies = await kap.getCompanies();
+const search = await kap.search('türk hava');
+```
+
+**Response (Companies):**
+```json
+[
+  {
+    "ticker": "THYAO",
+    "name": "TÜRK HAVA YOLLARI A.O.",
+    "city": "İSTANBUL"
+  }
+]
+```
+
+**Response (Search):**
+```json
+[
+  {
+    "ticker": "THYAO",
+    "name": "TÜRK HAVA YOLLARI A.O.",
+    "city": "İSTANBUL"
+  }
+]
+```
+
+**KAP Bildirimleri:**
+```typescript
+const disclosures = await kap.getDisclosures('THYAO', 5);
+```
+
+**Response (Disclosures):**
+```json
+[
+  {
+    "date": "29.12.2025 19:21:18",
+    "title": "Haber ve Söylentilere İlişkin Açıklama",
+    "disclosureIndex": 1530826,
+    "url": "https://www.kap.org.tr/tr/Bildirim/1530826"
+  }
+]
+```
+
+**Beklenen Bildirim Takvimi:**
+```typescript
+const calendar = await kap.getCalendar('THYAO');
+```
+
+**Response (Calendar):**
+```json
+[
+  {
+    "startDate": "01.01.2026",
+    "endDate": "11.03.2026",
+    "subject": "Finansal Rapor",
+    "period": "Yıllık",
+    "year": "2025"
+  }
+]
+```
+
+**Şirket Detayları:**
+```typescript
+const details = await kap.getCompanyDetails('THYAO');
+```
+
+**Response (Company Details):**
+```json
+{
+  "sector": "ULAŞTIRMA VE DEPOLAMA",
+  "market": "YILDIZ PAZAR",
+  "website": "www.turkishairlines.com / http://investor.turkishairlines.com"
+}
+```
+
 ### Symbols (Sembol Listeleri)
 
 ```typescript
@@ -208,6 +289,7 @@ Bu kütüphane aşağıdaki kamuya açık veri kaynaklarından yararlanmaktadır
 | Crypto | BtcTurk | [btcturk.com](https://www.btcturk.com/) | Kripto para verileri |
 | Fund | TEFAS | [tefas.gov.tr](https://www.tefas.gov.tr/) | Yatırım fonu verileri |
 | Inflation | TCMB | [tcmb.gov.tr](https://www.tcmb.gov.tr/) | Enflasyon verileri |
+| KAP | KAP | [kap.org.tr](https://www.kap.org.tr/) | Şirket bilgileri |
 | VIOP | İş Yatırım | [isyatirim.com.tr](https://www.isyatirim.com.tr/) | Vadeli işlem ve opsiyon |
 
 ## ⚠️ Önemli Uyarılar

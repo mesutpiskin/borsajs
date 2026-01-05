@@ -9,6 +9,7 @@ import { Index, indices } from '../src/index-class.js';
 import { Inflation } from '../src/inflation.js';
 import { Ticker } from '../src/ticker.js';
 import { symbols, searchSymbols, cryptoSymbols, fxSymbols, indexSymbols } from '../src/market.js';
+import { getKapProvider } from '../src/providers/kap.js';
 
 async function testCrypto() {
     console.log('\n🪙 CRYPTO (BtcTurk)');
@@ -117,6 +118,40 @@ async function testSymbols() {
     } catch (error) { console.error('Error:', error); }
 }
 
+async function testKap() {
+    console.log('\n🏛️  KAP (Public Disclosure Platform)');
+    console.log('─'.repeat(60));
+    try {
+        const kap = getKapProvider();
+        const companies = await kap.getCompanies();
+        console.log(`Total Companies: ${companies.length}`);
+        console.log('Sample:', JSON.stringify(companies.slice(0, 3), null, 2));
+
+        const search = await kap.search('türk hava');
+        console.log('\nSearch "türk hava":', JSON.stringify(search, null, 2));
+
+        // Test disclosures
+        const disclosures = await kap.getDisclosures('THYAO', 5);
+        console.log(`\nRecent THYAO Disclosures (${disclosures.length}):`);
+        disclosures.forEach((d, i) => {
+            console.log(`  ${i + 1}. [${d.date}] ${d.title}`);
+            console.log(`     ${d.url}`);
+        });
+
+        // Test calendar
+        const calendar = await kap.getCalendar('THYAO');
+        console.log(`\nTHYAO Expected Disclosures (${calendar.length}):`);
+        calendar.slice(0, 3).forEach((c, i) => {
+            console.log(`  ${i + 1}. ${c.subject} (${c.period} ${c.year})`);
+            console.log(`     ${c.startDate} - ${c.endDate}`);
+        });
+
+        // Test company details
+        const details = await kap.getCompanyDetails('THYAO');
+        console.log('\nTHYAO Company Details:', JSON.stringify(details, null, 2));
+    } catch (error) { console.error('Error:', error); }
+}
+
 async function main() {
     console.log('🚀 borsajs API Test');
     console.log('═'.repeat(60));
@@ -128,6 +163,7 @@ async function main() {
     await testFund();
     await testInflation();
     await testSymbols();
+    await testKap();
 
     console.log('\n' + '═'.repeat(60));
     console.log('✅ All tests completed!');
