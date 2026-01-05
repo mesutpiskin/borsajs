@@ -10,6 +10,7 @@ import { Inflation } from '../src/inflation.js';
 import { Ticker } from '../src/ticker.js';
 import { symbols, searchSymbols, cryptoSymbols, fxSymbols, indexSymbols } from '../src/market.js';
 import { getKapProvider } from '../src/providers/kap.js';
+import { VIOP } from '../src/viop.js';
 
 async function testCrypto() {
     console.log('\n🪙 CRYPTO (BtcTurk)');
@@ -152,6 +153,35 @@ async function testKap() {
     } catch (error) { console.error('Error:', error); }
 }
 
+async function testViop() {
+    console.log('\n📊 VIOP (Derivatives Market)');
+    console.log('─'.repeat(60));
+    try {
+        const viop = new VIOP();
+
+        // Test stock futures
+        const stockFutures = await viop.getStockFutures();
+        console.log(`Stock Futures: ${stockFutures.length} contracts`);
+        if (stockFutures.length > 0) {
+            console.log('Sample:', JSON.stringify(stockFutures.slice(0, 2), null, 2));
+        }
+
+        // Test index futures
+        const indexFutures = await viop.getIndexFutures();
+        console.log(`\nIndex Futures: ${indexFutures.length} contracts`);
+        if (indexFutures.length > 0) {
+            console.log('Sample:', JSON.stringify(indexFutures.slice(0, 2), null, 2));
+        }
+
+        // Test by symbol
+        const thyaoContracts = await viop.getBySymbol('THYAO');
+        console.log(`\nTHYAO Contracts: ${thyaoContracts.length}`);
+        if (thyaoContracts.length > 0) {
+            console.log('First:', JSON.stringify(thyaoContracts[0], null, 2));
+        }
+    } catch (error) { console.error('Error:', error); }
+}
+
 async function main() {
     console.log('🚀 borsajs API Test');
     console.log('═'.repeat(60));
@@ -164,6 +194,7 @@ async function main() {
     await testInflation();
     await testSymbols();
     await testKap();
+    await testViop();
 
     console.log('\n' + '═'.repeat(60));
     console.log('✅ All tests completed!');

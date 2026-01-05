@@ -348,9 +348,40 @@ console.log(indexSymbols); // → 19 indices
 import { VIOP } from 'borsajs';
 
 const viop = new VIOP();
+
+// Get all futures
 const futures = await viop.getFutures();
+
+// Stock futures
+const stockFutures = await viop.getStockFutures();
+
+// Index futures (XU100, XU030, etc.)
+const indexFutures = await viop.getIndexFutures();
+
+// Currency futures (USD, EUR)
+const currencyFutures = await viop.getCurrencyFutures();
+
+// Commodity futures (Gold)
+const commodityFutures = await viop.getCommodityFutures();
+
+// Options
 const options = await viop.getOptions();
-const thyao = await viop.getBySymbol('THYAO');
+
+// Contracts for specific stock
+const thyaoContracts = await viop.getBySymbol('THYAO');
+```
+
+**Response (Contract Data):**
+```json
+{
+  "code": "THYAO",
+  "contract": "THYAO0226",
+  "price": 275.5,
+  "change": 1.25,
+  "volumeTl": 15420000,
+  "volumeQty": 56000,
+  "category": "stock"
+}
 ```
 
 ### Download (Multiple Tickers)

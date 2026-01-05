@@ -276,6 +276,50 @@ const details = await kap.getCompanyDetails('THYAO');
 }
 ```
 
+### VIOP (Vadeli İşlem ve Opsiyon Piyasası)
+
+**Türk türev piyasasını gerçek zamanlı takip edin.** Hisse senedi vadeli işlemleri, endeks vadeli işlemleri, döviz ve emtia kontratlarına anında erişin. Riskten korunma (hedging) stratejileri ve türev ürün ticareti için vazgeçilmez.
+
+```typescript
+import { VIOP } from 'borsajs';
+
+const viop = new VIOP();
+
+// Tüm vadeli işlemleri al
+const futures = await viop.getFutures();
+
+// Hisse senedi vadeli işlemleri
+const stockFutures = await viop.getStockFutures();
+
+// Endeks vadeli işlemleri
+const indexFutures = await viop.getIndexFutures();
+
+// Döviz vadeli işlemleri
+const currencyFutures = await viop.getCurrencyFutures();
+
+// Emtia vadeli işlemleri
+const commodityFutures = await viop.getCommodityFutures();
+
+// Opsiyonlar
+const options = await viop.getOptions();
+
+// Belirli bir hisse için kontratlar
+const thyaoContracts = await viop.getBySymbol('THYAO');
+```
+
+**Response (Contract Data):**
+```json
+{
+  "code": "THYAO",
+  "contract": "THYAO0226",
+  "price": 275.5,
+  "change": 1.25,
+  "volumeTl": 15420000,
+  "volumeQty": 56000,
+  "category": "stock"
+}
+```
+
 ### Symbols (Sembol Listeleri)
 
 **Tüm piyasa sembollerine tek çağrıda erişin.** Hisse senetleri, kripto paralar, dövizler ve endekslerin sembol listelerini alın. Otomatik veri çekme veya tarama algoritmaları için mükemmel başlangıç noktası.
