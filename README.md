@@ -39,6 +39,8 @@ const cryptoList = await cryptoSymbols(); // → ['BTCTRY', 'ETHTRY', ...] (173 
 
 ### Ticker (Hisse Senedi)
 
+**BIST hisselerinin anlık fiyat ve hacim verilerine saniyeler içinde ulaşın.** Ticker API, bir hisse senedinin güncel fiyatı, günlük değişimi, işlem hacmi ve OHLC (açılış-en yüksek-en düşük-kapanış) değerlerini kolayca almanızı sağlar. Teknik analiz, portföy takibi veya otomatik alım-satım stratejileri için ideal.
+
 ```typescript
 import { Ticker } from 'borsajs';
 
@@ -65,6 +67,8 @@ const info = await stock.getInfo();
 
 ### FX (Döviz & Emtia)
 
+**Döviz kurları ve emtia fiyatlarını canlı takip edin.** FX API ile USD, EUR gibi döviz kurlarının yanı sıra altın, gümüş ve ons fiyatlarına anında erişebilirsiniz. Kur takibi, döviz arbitrajı veya altın yatırım stratejileri için güvenilir veri kaynağı.
+
 ```typescript
 import { FX, fxSymbols } from 'borsajs';
 
@@ -88,6 +92,8 @@ const current = await usd.getCurrent();
 ```
 
 ### Crypto (Kripto Para)
+
+**Türkiye'nin en büyük kripto borsası BtcTurk'ten anlık veriler.** 173 kripto para çiftinin fiyat, hacim ve değişim bilgilerine erişin. Bitcoin, Ethereum ve diğer kripto paraların TRY karşılığını takip etmek için en hızlı yol.
 
 ```typescript
 import { Crypto, cryptoSymbols } from 'borsajs';
@@ -118,6 +124,8 @@ const current = await btc.getCurrent();
 
 ### Index (Endeksler)
 
+**BIST endekslerini gerçek zamanlı izleyin.** XU100, XU030, XBANK gibi sektör ve piyasa endekslerinin güncel değerleri ve yüzdesel değişimlerini alın. Piyasa trendlerini analiz etmek ve sektörel performansı karşılaştırmak için vazgeçilmez.
+
 ```typescript
 import { Index, indexSymbols } from 'borsajs';
 
@@ -144,6 +152,8 @@ const info = await xu100.getInfo();
 ```
 
 ### Inflation (Enflasyon)
+
+**TCMB'nin resmi enflasyon verilerine doğrudan erişin.** Aylık ve yıllık TÜFE oranlarını sorgulayın veya geçmiş tarihler arasında enflasyon hesaplayın. Yatırım kararlarınızı reel getiri bazında değerlendirmek için kritik.
 
 ```typescript
 import { Inflation } from 'borsajs';
@@ -178,6 +188,14 @@ const calc = await inflation.calculate(100000, '2020-01', '2024-01');
 ```
 
 ### KAP (Kamu Aydınlatma Platformu)
+
+**Şirketlerin resmi açıklamalarına ve bildirimlerine tek noktadan ulaşın.** KAP API ile 731 BIST şirketinin bildirimlerini, beklenen rapor takvimlerini ve kurumsal bilgilerini sorgulayabilirsiniz. Yatırım kararlarınızı şirketlerin resmi açıklamaları ışığında alın.
+
+**Özellikler:**
+- 🏢 **731 BIST şirketi** - Tüm halka açık şirketlerin listesi ve bilgileri
+- 📢 **Anlık Bildirimler** - Şirketlerin KAP'a yaptığı tüm açıklamalar
+- 📅 **Bildirim Takvimi** - Finansal rapor ve açıklama tarihleri
+- 🏛️ **Kurumsal Bilgiler** - Sektör, pazar, web sitesi bilgileri
 
 ```typescript
 import { getKapProvider } from 'borsajs';
@@ -259,6 +277,8 @@ const details = await kap.getCompanyDetails('THYAO');
 ```
 
 ### Symbols (Sembol Listeleri)
+
+**Tüm piyasa sembollerine tek çağrıda erişin.** Hisse senetleri, kripto paralar, dövizler ve endekslerin sembol listelerini alın. Otomatik veri çekme veya tarama algoritmaları için mükemmel başlangıç noktası.
 
 ```typescript
 import { symbols, searchSymbols, cryptoSymbols, fxSymbols, indexSymbols } from 'borsajs';

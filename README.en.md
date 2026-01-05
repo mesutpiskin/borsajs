@@ -39,6 +39,8 @@ const cryptoList = await cryptoSymbols(); // → ['BTCTRY', 'ETHTRY', ...] (173 
 
 ### Ticker (Stocks)
 
+**Get real-time BIST stock prices and volume data in seconds.** The Ticker API provides instant access to current price, daily change, volume, and OHLC (Open-High-Low-Close) values for any stock. Perfect for technical analysis, portfolio tracking, or automated trading strategies.
+
 ```typescript
 import { Ticker } from 'borsajs';
 
@@ -83,6 +85,8 @@ const history = await stock.getHistory({ period: '5d', interval: '1d' });
 
 ### FX (Forex & Commodities)
 
+**Track live exchange rates and commodity prices effortlessly.** Access real-time data for major currencies (USD, EUR, GBP) and precious metals (gold, silver). Essential for currency arbitrage, gold investment strategies, or exchange rate monitoring.
+
 ```typescript
 import { FX, fxSymbols } from 'borsajs';
 
@@ -106,6 +110,8 @@ const current = await usd.getCurrent();
 ```
 
 ### Crypto
+
+**Live data from Turkey's largest crypto exchange, BtcTurk.** Access price, volume, and change information for 173 cryptocurrency pairs. The fastest way to track Bitcoin, Ethereum, and other cryptos in Turkish Lira.
 
 ```typescript
 import { Crypto, cryptoSymbols } from 'borsajs';
@@ -136,6 +142,8 @@ const current = await btc.getCurrent();
 
 ### Index
 
+**Monitor BIST indices in real-time.** Get current values and percentage changes for market and sector indices like XU100, XU030, XBANK. Essential for analyzing market trends and comparing sectoral performance.
+
 ```typescript
 import { Index, indexSymbols } from 'borsajs';
 
@@ -163,6 +171,8 @@ const info = await xu100.getInfo();
 
 ### Fund (Investment Funds)
 
+**Search and track Turkish investment funds from TEFAS.** Access fund prices, returns, and performance metrics. Compare funds and make informed investment decisions with official data.
+
 ```typescript
 import { Fund, searchFunds } from 'borsajs';
 
@@ -185,6 +195,8 @@ const info = await fund.getInfo();
 ```
 
 ### Inflation
+
+**Access official inflation data directly from TCMB (Central Bank).** Query monthly and annual CPI rates, or calculate inflation between any two dates. Critical for evaluating investments on a real return basis.
 
 ```typescript
 import { Inflation } from 'borsajs';
@@ -219,6 +231,14 @@ const calc = await inflation.calculate(100000, '2020-01', '2024-01');
 ```
 
 ### KAP (Public Disclosure Platform)
+
+**One-stop access to official company announcements and disclosures.** Query disclosures, expected report calendars, and corporate information for all 731 BIST companies. Make investment decisions based on official company statements.
+
+**Features:**
+- 🏢 **731 BIST Companies** - Complete list with details
+- 📢 **Live Disclosures** - All company announcements
+- 📅 **Disclosure Calendar** - Financial report dates
+- 🏛️ **Corporate Info** - Sector, market, website
 
 ```typescript
 import { getKapProvider } from 'borsajs';
@@ -301,6 +321,8 @@ const details = await kap.getCompanyDetails('THYAO');
 
 ### Symbols
 
+**Access all market symbols in a single call.** Get comprehensive lists of stocks, cryptocurrencies, currencies, and indices. Perfect starting point for automated data collection or screening algorithms.
+
 ```typescript
 import { symbols, searchSymbols, cryptoSymbols, fxSymbols, indexSymbols } from 'borsajs';
 
@@ -320,6 +342,8 @@ console.log(indexSymbols); // → 19 indices
 
 ### VIOP (Derivatives)
 
+**Track Turkish derivatives market (futures and options).** Access real-time data for stock futures, index futures, currency futures, and options contracts. Essential for hedging strategies and derivatives trading.
+
 ```typescript
 import { VIOP } from 'borsajs';
 
@@ -330,6 +354,8 @@ const thyao = await viop.getBySymbol('THYAO');
 ```
 
 ### Download (Multiple Tickers)
+
+**Batch download historical data for multiple stocks at once.** Efficient way to collect OHLCV data for portfolio analysis or backtesting strategies. Get data for dozens of stocks in a single request.
 
 ```typescript
 import { download, Tickers } from 'borsajs';
