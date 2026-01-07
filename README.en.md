@@ -10,6 +10,16 @@ A TypeScript/JavaScript data library for Turkey financial markets. yfinance-like
 npm install borsajs
 ```
 
+## 🚀 Demo & Showcase
+
+**[Live Demo](https://borsajs-showcase.web.app/)** - Try all features live!
+
+An interactive demo application showcasing all library capabilities:
+- 📊 Live examples of 10 different API modules
+- 💻 Code examples for each API
+
+🔗 **Demo Source:** [GitHub - borsajs-demo](https://github.com/mesutpiskin/borsajs-demo)
+
 ## Table of Contents
 
 - [Quick Start](#quick-start)

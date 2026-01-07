@@ -10,6 +10,16 @@ Türkiye finansal piyasaları için TypeScript/JavaScript veri kütüphanesi. BI
 npm install borsajs
 ```
 
+## 🚀 Demo & Showcase
+
+**[Live Demo](https://borsajs-showcase.web.app/)** - Tüm özellikleri canlı olarak deneyin!
+
+Kütüphanenin tüm yeteneklerini gösteren interaktif demo uygulaması:
+- 📊 10 farklı API modülünün canlı örnekleri
+- 💻 Her API için kod örnekleri
+
+🔗 **Demo Kaynağı:** [GitHub - borsajs-demo](https://github.com/mesutpiskin/borsajs-demo)
+
 ## İçindekiler
 
 - [Hızlı Başlangıç](#hızlı-başlangıç)
