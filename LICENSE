@@ -210,12 +210,12 @@ https://github.com/saidsurucu/borsapy
 This library accesses publicly available data from the following sources:
 
 - Paratic (https://www.paratic.com/) - Stock and index data
-- doviz.com (https://www.doviz.com/) - Forex, gold, and commodity data
+- doviz.com (https://www.doviz.com/) - Forex, gold, commodity, economic calendar, and bond data
 - BtcTurk (https://www.btcturk.com/) - Cryptocurrency data
 - TEFAS (https://www.tefas.gov.tr/) - Investment fund data
 - TCMB (https://www.tcmb.gov.tr/) - Inflation data
 - KAP (https://www.kap.org.tr/) - Company information
-- İş Yatırım (https://www.isyatirim.com.tr/) - Derivatives (VIOP) data
+- İş Yatırım (https://www.isyatirim.com.tr/) - Derivatives (VIOP) and stock screening data
 
 ================================================================================
                         IMPORTANT NOTICE FOR COMMERCIAL USE

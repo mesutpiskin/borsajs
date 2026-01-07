@@ -1,6 +1,6 @@
 {
     "name": "borsajs",
-    "version": "0.1.5",
+    "version": "0.2.0",
     "description": "Türkiye financial markets data library, BIST stocks, KAP,VIOP, forex, crypto, investment funds, and more",
     "type": "module",
     "main": "dist/index.js",

@@ -11,6 +11,9 @@ import { Ticker } from '../src/ticker.js';
 import { symbols, searchSymbols, cryptoSymbols, fxSymbols, indexSymbols } from '../src/market.js';
 import { getKapProvider } from '../src/providers/kap.js';
 import { VIOP } from '../src/viop.js';
+import { EconomicCalendar, economicCalendar } from '../src/calendar.js';
+import { Bond, bonds, riskFreeRate } from '../src/bond.js';
+import { Screener, screenStocks, sectors } from '../src/screener.js';
 
 async function testCrypto() {
     console.log('\n🪙 CRYPTO (BtcTurk)');
@@ -182,8 +185,89 @@ async function testViop() {
     } catch (error) { console.error('Error:', error); }
 }
 
+async function testEconomicCalendar() {
+    console.log('\n📅 ECONOMIC CALENDAR (doviz.com)');
+    console.log('─'.repeat(60));
+    try {
+        const cal = new EconomicCalendar();
+
+        // Get this week's events
+        const weekEvents = await cal.thisWeek();
+        console.log(`This week's events (TR + US): ${weekEvents.length} events`);
+
+        if (weekEvents.length > 0) {
+            console.log('\nFirst 3 events:');
+            weekEvents.slice(0, 3).forEach(event => {
+                console.log(`  [${event.country}] ${event.event} (${event.importance})`);
+                console.log(`  ${event.date.toLocaleDateString()} ${event.time || 'TBA'}`);
+            });
+        }
+
+        // Get high importance events
+        const highEvents = await economicCalendar({ period: '1w', importance: 'high' });
+        console.log(`\nHigh importance events: ${highEvents.length}`);
+    } catch (error) { console.error('Error:', error); }
+}
+
+async function testBonds() {
+    console.log('\n💰 BOND YIELDS (doviz.com)');
+    console.log('─'.repeat(60));
+    try {
+        // Get all bonds
+        const allBonds = await bonds();
+        console.log('Turkish Government Bond Yields:');
+        allBonds.forEach(bond => {
+            const changeSign = (bond.changePct || 0) >= 0 ? '+' : '';
+            console.log(`  ${bond.maturity}: ${bond.yield.toFixed(2)}% (${changeSign}${bond.changePct?.toFixed(2)}%)`);
+        });
+
+        // Get risk-free rate
+        const rfr = await riskFreeRate();
+        if (rfr) {
+            console.log(`\nRisk-Free Rate (for DCF): ${(rfr * 100).toFixed(2)}%`);
+        }
+
+        // Get specific bond
+        const bond10y = new Bond('10Y');
+        const info = await bond10y.getInfo();
+        console.log(`\n10Y Bond: ${info.name}`);
+        console.log(`  Yield (decimal): ${info.yieldDecimal.toFixed(4)}`);
+    } catch (error) { console.error('Error:', error); }
+}
+
+async function testScreener() {
+    console.log('\n🔍 STOCK SCREENER (İş Yatırım)');
+    console.log('─'.repeat(60));
+    try {
+        // Get available sectors
+        const sectorList = await sectors();
+        console.log(`Available Sectors: ${sectorList.length}`);
+        console.log(`Sample: ${sectorList.slice(0, 5).join(', ')}...`);
+
+        // Use template
+        const highDivStocks = await screenStocks({ template: 'high_dividend' });
+        console.log(`\nHigh Dividend Stocks: ${highDivStocks.length}`);
+        if (highDivStocks.length > 0) {
+            console.log('Sample:');
+            highDivStocks.slice(0, 3).forEach(stock => {
+                console.log(`  ${stock.symbol}: ${stock.name}`);
+            });
+        }
+
+        // Custom filter with fluent API
+        const screener = new Screener();
+        const largeCapStocks = await screener
+            .addFilter('market_cap', { min: 215000 })
+            .run();
+        console.log(`\nLarge Cap Stocks (>215B TL): ${largeCapStocks.length}`);
+        if (largeCapStocks.length > 0) {
+            console.log('Sample:', largeCapStocks.slice(0, 3).map(s => s.symbol).join(', '));
+        }
+    } catch (error) { console.error('Error:', error); }
+}
+
 async function main() {
-    console.log('🚀 borsajs API Test');
+    console.log('🚀 borsajs v0.2.0 API Test');
     console.log('═'.repeat(60));
 
     await testCrypto();
@@ -195,6 +279,9 @@ async function main() {
     await testSymbols();
     await testKap();
     await testViop();
+    await testEconomicCalendar();
+    await testBonds();
+    await testScreener();
 
     console.log('\n' + '═'.repeat(60));
     console.log('✅ All tests completed!');

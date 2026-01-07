@@ -10,6 +10,27 @@ A TypeScript/JavaScript data library for Turkey financial markets. yfinance-like
 npm install borsajs
 ```
 
+## Table of Contents
+
+- [Quick Start](#quick-start)
+- [API Reference](#api-reference)
+  - [Ticker (Stocks)](#ticker-stocks)
+  - [FX (Forex & Commodities)](#fx-forex--commodities)
+  - [Crypto](#crypto)
+  - [Index](#index)
+  - [Fund (Investment Funds)](#fund-investment-funds)
+  - [Inflation](#inflation)
+  - [KAP (Public Disclosure Platform)](#kap-public-disclosure-platform)
+  - [EconomicCalendar](#economiccalendar)
+  - [Bond](#bond)
+  - [Screener](#screener)
+  - [VIOP (Derivatives)](#viop-derivatives)
+  - [Symbols](#symbols)
+  - [Download (Multiple Tickers)](#download-multiple-tickers)
+- [Data Sources](#data-sources)
+- [Important Notices](#️-important-notices)
+- [License](#license)
+
 ## Quick Start
 
 ```typescript
@@ -319,6 +340,105 @@ const details = await kap.getCompanyDetails('THYAO');
 }
 ```
 
+### EconomicCalendar
+
+**Track global economic indicators and events in real-time.** Access economic data, reports, and announcements from TR, US, EU, and other countries. Make investment decisions based on macroeconomic indicators.
+
+```typescript
+import { EconomicCalendar, economicCalendar } from 'borsajs';
+
+const cal = new EconomicCalendar();
+const events = await cal.thisWeek();
+const highEvents = await cal.highImportance({ period: '1w' });
+
+// Convenience function
+const trEvents = await economicCalendar({ country: 'TR', importance: 'high' });
+```
+
+**Response:**
+```json
+[
+  {
+    "date": "2026-01-15T00:00:00.000Z",
+    "time": "10:00",
+    "country": "Türkiye",
+    "countryCode": "TR",
+    "event": "Inflation (YoY)",
+    "importance": "high",
+    "period": "December",
+    "actual": "64.77%",
+    "forecast": "65.00%",
+    "previous": "61.98%"
+  }
+]
+```
+
+**Supported Countries:** TR, US, EU, DE, GB, JP, CN, FR, IT, CA, AU, CH
+
+### Bond
+
+**Track Turkish government bond yields in real-time.** Access yields and changes for 2, 5, and 10-year bonds. Get risk-free rate for DCF calculations.
+
+```typescript
+import { Bond, bonds, riskFreeRate } from 'borsajs';
+
+// Get all bonds
+const allBonds = await bonds();
+// → [{ maturity: '2Y', yield: 36.71, ... }, ...]
+
+// Specific bond
+const bond10y = new Bond('10Y');
+const yieldRate = await bond10y.getYieldRate();
+const yieldDecimal = await bond10y.getYieldDecimal();
+
+// Risk-free rate for DCF
+const rfr = await riskFreeRate();
+// → 0.2905 (for 29.05%)
+```
+
+**Response (bonds):**
+```json
+[
+  {
+    "name": "TR 2 Year Bond Rate",
+    "maturity": "2Y",
+    "yield": 36.71,
+    "yieldDecimal": 0.3671,
+    "change": 0.17,
+    "changePct": 0.47
+  }
+]
+```
+
+### Screener
+
+**Screen BIST stocks with 40+ criteria.** Find stocks by market cap, P/E ratio, dividend yield, ROE, and more. Use 15 ready-made templates or custom filters.
+
+```typescript
+import { Screener, screenStocks, sectors } from 'borsajs';
+
+// Use template
+const highDivStocks = await screenStocks({ template: 'high_dividend' });
+
+// Custom filters
+const customStocks = await screenStocks({
+  marketCapMin: 1000,  // Min 1000M TL
+  peMax: 15,           // Max 15 P/E
+  dividendYieldMin: 3, // Min 3% dividend
+});
+
+// Fluent API
+const screener = new Screener();
+const results = await screener
+  .addFilter('market_cap', { min: 215000 })
+  .addFilter('roe', { min: 15 })
+  .run();
+```
+
+**Templates:** `small_cap`, `mid_cap`, `large_cap`, `high_dividend`, `high_upside`, `buy_recommendation`, `high_net_margin`, `low_pe`, `high_roe`, `high_foreign_ownership`
+
+**Filter Criteria:** price, market_cap, pe, pb, ev_ebitda, dividend_yield, roe, roa, net_margin, return_1w, return_1m, foreign_ratio, upside_potential, and 30+ more criteria.
+
 ### Symbols
 
 **Access all market symbols in a single call.** Get comprehensive lists of stocks, cryptocurrencies, currencies, and indices. Perfect starting point for automated data collection or screening algorithms.
@@ -408,6 +528,9 @@ This library accesses publicly available data from the following sources:
 | Fund | TEFAS | [tefas.gov.tr](https://www.tefas.gov.tr/) | Investment fund data |
 | Inflation | TCMB | [tcmb.gov.tr](https://www.tcmb.gov.tr/) | Inflation data |
 | KAP | KAP | [kap.org.tr](https://www.kap.org.tr/) | Company information |
+| EconomicCalendar | doviz.com | [doviz.com](https://www.doviz.com/) | Economic calendar |
+| Bond | doviz.com | [doviz.com](https://www.doviz.com/) | Bond yields |
+| Screener | İş Yatırım | [isyatirim.com.tr](https://www.isyatirim.com.tr/) | Stock screening |
 | VIOP | İş Yatırım | [isyatirim.com.tr](https://www.isyatirim.com.tr/) | Futures and options |
 
 ## ⚠️ Important Notices

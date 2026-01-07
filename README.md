@@ -10,6 +10,26 @@ Türkiye finansal piyasaları için TypeScript/JavaScript veri kütüphanesi. BI
 npm install borsajs
 ```
 
+## İçindekiler
+
+- [Hızlı Başlangıç](#hızlı-başlangıç)
+- [API Referansı](#api-referansı)
+  - [Ticker (Hisse Senedi)](#ticker-hisse-senedi)
+  - [FX (Döviz & Emtia)](#fx-döviz--emtia)
+  - [Crypto (Kripto Para)](#crypto-kripto-para)
+  - [Index (Endeksler)](#index-endeksler)
+  - [Fund (Yatırım Fonları)](#fund-yatırım-fonları)
+  - [Inflation (Enflasyon)](#inflation-enflasyon)
+  - [KAP (Kamu Aydınlatma Platformu)](#kap-kamu-aydınlatma-platformu)
+  - [EconomicCalendar (Ekonomik Takvim)](#economiccalendar-ekonomik-takvim)
+  - [Bond (Tahvil Getirileri)](#bond-tahvil-getirileri)
+  - [Screener (Hisse Tarayıcı)](#screener-hisse-tarayıcı)
+  - [VIOP (Vadeli İşlem ve Opsiyon Piyasası)](#viop-vadeli-i̇şlem-ve-opsiyon-piyasası)
+  - [Symbols (Sembol Listeleri)](#symbols-sembol-listeleri)
+- [Veri Kaynakları](#veri-kaynakları)
+- [Önemli Uyarılar](#️-önemli-uyarılar)
+- [Lisans](#lisans)
+
 ## Hızlı Başlangıç
 
 ```typescript
@@ -276,6 +296,105 @@ const details = await kap.getCompanyDetails('THYAO');
 }
 ```
 
+### EconomicCalendar (Ekonomik Takvim)
+
+**Küresel ekonomik göstergeleri ve etkinlikleri gerçek zamanlı takip edin.** EconomicCalendar API ile TR, US, EU ve diğer ülkelerin önemli ekonomik verilerini, raporlarını ve açıklamalarını önceden öğrenin. Yatırım kararlarınızı makro ekonomik göstergeler ışığında alın.
+
+```typescript
+import { EconomicCalendar, economicCalendar } from 'borsajs';
+
+const cal = new EconomicCalendar();
+const events = await cal.thisWeek();
+const highEvents = await cal.highImportance({ period: '1w' });
+
+// Convenience fonksiyonu
+const trEvents = await economicCalendar({ country: 'TR', importance: 'high' });
+```
+
+**Response:**
+```json
+[
+  {
+    "date": "2026-01-15T00:00:00.000Z",
+    "time": "10:00",
+    "country": "Türkiye",
+    "countryCode": "TR",
+    "event": "Enflasyon (YoY)",
+    "importance": "high",
+    "period": "Aralık",
+    "actual": "64.77%",
+    "forecast": "65.00%",
+    "previous": "61.98%"
+  }
+]
+```
+
+**Desteklenen Ülkeler:** TR, US, EU, DE, GB, JP, CN, FR, IT, CA, AU, CH
+
+### Bond (Tahvil Getirileri)
+
+**Türk devlet tahvillerinin getirilerini anlık izleyin.** Bond API ile 2, 5 ve 10 yıllık tahvil faizlerini ve değişimlerini takip edin. DCF hesaplamaları için risksiz getiri oranına kolayca erişin.
+
+```typescript
+import { Bond, bonds, riskFreeRate } from 'borsajs';
+
+// Tüm tahvilleri al
+const allBonds = await bonds();
+// → [{ maturity: '2Y', yield: 36.71, ... }, ...]
+
+// Belirli bir tahvil
+const bond10y = new Bond('10Y');
+const yieldRate = await bond10y.getYieldRate();
+const yieldDecimal = await bond10y.getYieldDecimal();
+
+// DCF hesaplamaları için risksiz getiri
+const rfr = await riskFreeRate();
+// → 0.2905 (29.05% için)
+```
+
+**Response (bonds):**
+```json
+[
+  {
+    "name": "TR 2 Yıllık Tahvil Faizi",
+    "maturity": "2Y",
+    "yield": 36.71,
+    "yieldDecimal": 0.3671,
+    "change": 0.17,
+    "changePct": 0.47
+  }
+]
+```
+
+### Screener (Hisse Tarayıcı)
+
+**BIST hisselerini 40+ farklı kritere göre tarayın.** Screener API ile piyasa değeri, F/K oranı, temettü verimi, ROE ve daha fazla kritere göre hisse senedi bulun. 15 hazır şablon veya özel filtreler ile yatırım stratejinize uygun hisseleri keşfedin.
+
+```typescript
+import { Screener, screenStocks, sectors } from 'borsajs';
+
+// Hazır şablon kullan
+const highDivStocks = await screenStocks({ template: 'high_dividend' });
+
+// Özel filtreler
+const customStocks = await screenStocks({
+  marketCapMin: 1000,  // Min 1000M TL
+  peMax: 15,           // Maks 15 F/K
+  dividendYieldMin: 3, // Min %3 temettü
+});
+
+// Fluent API
+const screener = new Screener();
+const results = await screener
+  .addFilter('market_cap', { min: 215000 })
+  .addFilter('roe', { min: 15 })
+  .run();
+```
+
+**Hazır Şablonlar:** `small_cap`, `mid_cap`, `large_cap`, `high_dividend`, `high_upside`, `buy_recommendation`, `high_net_margin`, `low_pe`, `high_roe`, `high_foreign_ownership`
+
+**Filtre Kriterleri:** price, market_cap, pe, pb, ev_ebitda, dividend_yield, roe, roa, net_margin, return_1w, return_1m, foreign_ratio, upside_potential ve 30+ kriter daha.
+
 ### VIOP (Vadeli İşlem ve Opsiyon Piyasası)
 
 **Türk türev piyasasını gerçek zamanlı takip edin.** Hisse senedi vadeli işlemleri, endeks vadeli işlemleri, döviz ve emtia kontratlarına anında erişin. Riskten korunma (hedging) stratejileri ve türev ürün ticareti için vazgeçilmez.
@@ -354,6 +473,9 @@ Bu kütüphane aşağıdaki kamuya açık veri kaynaklarından yararlanmaktadır
 | Fund | TEFAS | [tefas.gov.tr](https://www.tefas.gov.tr/) | Yatırım fonu verileri |
 | Inflation | TCMB | [tcmb.gov.tr](https://www.tcmb.gov.tr/) | Enflasyon verileri |
 | KAP | KAP | [kap.org.tr](https://www.kap.org.tr/) | Şirket bilgileri |
+| EconomicCalendar | doviz.com | [doviz.com](https://www.doviz.com/) | Ekonomik takvim |
+| Bond | doviz.com | [doviz.com](https://www.doviz.com/) | Tahvil getirileri |
+| Screener | İş Yatırım | [isyatirim.com.tr](https://www.isyatirim.com.tr/) | Hisse tarama |
 | VIOP | İş Yatırım | [isyatirim.com.tr](https://www.isyatirim.com.tr/) | Vadeli işlem ve opsiyon |
 
 ## ⚠️ Önemli Uyarılar

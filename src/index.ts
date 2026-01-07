@@ -22,6 +22,15 @@ export { Inflation } from './inflation.js';
 
 export { VIOP } from './viop.js';
 
+export { EconomicCalendar, economicCalendar } from './calendar.js';
+export type { EconomicEvent } from './calendar.js';
+
+export { Bond, bonds, riskFreeRate } from './bond.js';
+export type { BondData } from './bond.js';
+
+export { Screener, screenStocks, sectors, stockIndices } from './screener.js';
+export type { ScreenerResult, SectorInfo, StockIndexInfo } from './screener.js';
+
 export { symbols, searchSymbols, cryptoSymbols, fxSymbols, indexSymbols } from './market.js';
 export type { FXSymbol, IndexSymbol, StockSymbol, Company } from './market.js';
 
@@ -36,4 +45,4 @@ export type { FundInfo, FundHistoryData, SearchResult } from './providers/tefas.
 export type { InflationLatest, InflationData, InflationCalculation } from './providers/tcmb.js';
 export type { ContractData, Disclosure } from './providers/kap.js';
 
-export const VERSION = '0.1.0';
+export const VERSION = '0.2.0';
