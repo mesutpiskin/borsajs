@@ -43,6 +43,7 @@ export type { TickerData } from './providers/btcturk.js';
 export type { FXCurrentData, FXHistoryData } from './providers/dovizcom.js';
 export type { FundInfo, FundHistoryData, SearchResult } from './providers/tefas.js';
 export type { InflationLatest, InflationData, InflationCalculation } from './providers/tcmb.js';
-export type { ContractData, Disclosure } from './providers/kap.js';
+export type { ContractData, Disclosure, CalendarEvent, CompanyDetails } from './providers/kap.js';
+export { getKapProvider, getViopProvider, KapProvider, ViopProvider } from './providers/kap.js';
 
-export const VERSION = '0.2.0';
+export const VERSION = '0.2.1';
