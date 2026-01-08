@@ -13,54 +13,8 @@ npm install borsajs
 ## 🚀 Demo & Showcase
 
 **[Live Demo](https://borsajs-showcase.web.app/)** - Tüm özellikleri canlı olarak deneyin!
-
-Kütüphanenin tüm yeteneklerini gösteren interaktif demo uygulaması:
-- 📊 10 farklı API modülünün canlı örnekleri
-- 💻 Her API için kod örnekleri
-
 🔗 **Demo Kaynağı:** [GitHub - borsajs-demo](https://github.com/mesutpiskin/borsajs-demo)
 
-## ⚠️ Önemli: Tarayıcı Kullanımı
-
-**borsajs, Node.js backend ortamları için tasarlanmıştır.** 
-
-Browser'da (React, Vue, Angular vb. frontend uygulamalarında) doğrudan kullanım **CORS (Cross-Origin Resource Sharing)** hataları verecektir çünkü finansal veri kaynakları CORS header'ları sunmamaktadır.
-
-### ✅ Desteklenen Ortamlar
-- Node.js backend uygulamaları
-- Express.js, Fastify, NestJS vb. server-side framework'ler
-- Serverless functions (AWS Lambda, Vercel Functions, Firebase Functions)
-- CLI araçları ve scriptler
-
-### ❌ Desteklenmeyen Ortamlar
-- React, Vue, Angular gibi browser-based uygulamalar (doğrudan kullanım)
-- Client-side JavaScript (direkt browser'da çalışan kod)
-
-### 🔧 Browser'da Kullanım İçin Çözümler
-
-Eğer browser uygulamasında kullanmanız gerekiyorsa:
-
-1. **Backend API Oluşturun (Önerilen)**
-   ```typescript
-   // Backend (Node.js/Express)
-   app.get('/api/ticker/:symbol', async (req, res) => {
-     const ticker = new Ticker(req.params.symbol);
-     const data = await ticker.getInfo();
-     res.json(data);
-   });
-   
-   // Frontend
-   const response = await fetch('/api/ticker/THYAO');
-   const data = await response.json();
-   ```
-
-2. **CORS Proxy Kullanın**
-   - Kendi proxy sunucunuzu kurun
-   - ⚠️ Ücretsiz public proxy'ler güvenilir değildir
-
-3. **Serverless Function Kullanın**
-   - Vercel Functions, Netlify Functions, Firebase Functions
-   - Her request için ayrı function oluşturun
 
 ## İçindekiler
 
@@ -529,6 +483,49 @@ Bu kütüphane aşağıdaki kamuya açık veri kaynaklarından yararlanmaktadır
 | Bond | doviz.com | [doviz.com](https://www.doviz.com/) | Tahvil getirileri |
 | Screener | İş Yatırım | [isyatirim.com.tr](https://www.isyatirim.com.tr/) | Hisse tarama |
 | VIOP | İş Yatırım | [isyatirim.com.tr](https://www.isyatirim.com.tr/) | Vadeli işlem ve opsiyon |
+
+## ⚠️ Önemli: Tarayıcı Kullanımı
+
+**borsajs, Node.js backend ortamları için tasarlanmıştır.** 
+
+Browser'da (React, Vue, Angular vb. frontend uygulamalarında) doğrudan kullanım **CORS (Cross-Origin Resource Sharing)** hataları verecektir çünkü finansal veri kaynakları CORS header'ları sunmamaktadır.
+
+### ✅ Desteklenen Ortamlar
+- Node.js backend uygulamaları
+- Express.js, Fastify, NestJS vb. server-side framework'ler
+- Serverless functions (AWS Lambda, Vercel Functions, Firebase Functions)
+- CLI araçları ve scriptler
+
+### ❌ Desteklenmeyen Ortamlar
+- React, Vue, Angular gibi browser-based uygulamalar (doğrudan kullanım)
+- Client-side JavaScript (direkt browser'da çalışan kod)
+
+### 🔧 Browser'da Kullanım İçin Çözümler
+
+Eğer browser uygulamasında kullanmanız gerekiyorsa:
+
+1. **Backend API Oluşturun (Önerilen)**
+   ```typescript
+   // Backend (Node.js/Express)
+   app.get('/api/ticker/:symbol', async (req, res) => {
+     const ticker = new Ticker(req.params.symbol);
+     const data = await ticker.getInfo();
+     res.json(data);
+   });
+   
+   // Frontend
+   const response = await fetch('/api/ticker/THYAO');
+   const data = await response.json();
+   ```
+
+2. **CORS Proxy Kullanın**
+   - Kendi proxy sunucunuzu kurun
+   - ⚠️ Ücretsiz public proxy'ler güvenilir değildir
+
+3. **Serverless Function Kullanın**
+   - Vercel Functions, Netlify Functions, Firebase Functions
+   - Her request için ayrı function oluşturun
+
 
 ## ⚠️ Önemli Uyarılar
 
