@@ -20,6 +20,48 @@ An interactive demo application showcasing all library capabilities:
 
 🔗 **Demo Source:** [GitHub - borsajs-demo](https://github.com/mesutpiskin/borsajs-demo)
 
+## ⚠️ Important: Browser Usage
+
+**borsajs is designed for Node.js backend environments.**
+
+Direct usage in browsers (React, Vue, Angular, etc. frontend apps) will result in **CORS (Cross-Origin Resource Sharing)** errors because financial data sources do not provide CORS headers.
+
+### ✅ Supported Environments
+- Node.js backend applications
+- Server-side frameworks (Express.js, Fastify, NestJS, etc.)
+- Serverless functions (AWS Lambda, Vercel Functions, Firebase Functions)
+- CLI tools and scripts
+
+### ❌ Unsupported Environments
+- Browser-based applications (React, Vue, Angular - direct usage)
+- Client-side JavaScript (code running directly in browser)
+
+### 🔧 Solutions for Browser Usage
+
+If you need to use it in a browser application:
+
+1. **Create a Backend API (Recommended)**
+   ```typescript
+   // Backend (Node.js/Express)
+   app.get('/api/ticker/:symbol', async (req, res) => {
+     const ticker = new Ticker(req.params.symbol);
+     const data = await ticker.getInfo();
+     res.json(data);
+   });
+   
+   // Frontend
+   const response = await fetch('/api/ticker/THYAO');
+   const data = await response.json();
+   ```
+
+2. **Use a CORS Proxy**
+   - Set up your own proxy server
+   - ⚠️ Free public proxies are not reliable
+
+3. **Use Serverless Functions**
+   - Vercel Functions, Netlify Functions, Firebase Functions
+   - Create separate functions for each request
+
 ## Table of Contents
 
 - [Quick Start](#quick-start)

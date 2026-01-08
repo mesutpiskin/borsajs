@@ -46,4 +46,4 @@ export type { InflationLatest, InflationData, InflationCalculation } from './pro
 export type { ContractData, Disclosure, CalendarEvent, CompanyDetails } from './providers/kap.js';
 export { getKapProvider, getViopProvider, KapProvider, ViopProvider } from './providers/kap.js';
 
-export const VERSION = '0.2.1';
+export const VERSION = '0.2.2';
