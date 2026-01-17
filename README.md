@@ -372,6 +372,65 @@ const rfr = await riskFreeRate();
 ]
 ```
 
+### TCMB (Merkez Bankası Kurları)
+
+**TCMB faiz oranlarını ve günlük kurları doğrudan çekin.** Politika faizi, gecelik borçlanma/borç verme oranları ve geç likidite penceresi faizlerine erişin.
+
+```typescript
+import { TCMB } from 'borsajs';
+
+const tcmb = new TCMB();
+
+// Tüm faiz oranları
+const rates = await tcmb.getRates();
+// → { policy: { rate: 50, ... }, overnight: { borrowing: 47, ... }, ... }
+```
+
+**Response:**
+```json
+{
+  "policy": {
+    "date": "21.11.2024",
+    "rate": 50,
+    "change": 0
+  },
+  "overnight": {
+    "date": "17.01.2026",
+    "borrowing": 47,
+    "lending": 53
+  }
+}
+```
+
+### Eurobond (Devlet Tahvilleri)
+
+**Türk Eurobond'larının güncel fiyat ve getirilerini izleyin.** Dolar ve Euro bazlı devlet tahvillerinin fiyatı, kupon oranı, vadesi ve getiri oranlarını sorgulayın.
+
+```typescript
+import { Eurobond } from 'borsajs';
+
+const eb = new Eurobond();
+
+// Tüm Eurobond'lar (Varsayılan USD)
+const usdBonds = await eb.getBonds('USD');
+
+// Belirli bir ISIN kodu ile detay
+const bondDetail = await eb.getBond('US900123... ');
+```
+
+**Response:**
+```json
+[
+  {
+    "isin": "US900123...",
+    "maturity": "15.01.2030",
+    "couponRate": 11.875,
+    "price": 105.5,
+    "yield": 9.5
+  }
+]
+```
+
 ### Screener (Hisse Tarayıcı)
 
 **BIST hisselerini 40+ farklı kritere göre tarayın.** Screener API ile piyasa değeri, F/K oranı, temettü verimi, ROE ve daha fazla kritere göre hisse senedi bulun. 15 hazır şablon veya özel filtreler ile yatırım stratejinize uygun hisseleri keşfedin.
@@ -472,13 +531,15 @@ Bu kütüphane aşağıdaki kamuya açık veri kaynaklarından yararlanmaktadır
 
 | Modül | Kaynak | Web Sitesi | Açıklama |
 |-------|--------|------------|----------|
-| Ticker | Paratic | [paratic.com](https://www.paratic.com/) | Hisse senedi verileri |
+| Ticker | TradingView | [tradingview.com](https://www.tradingview.com/) | Hisse senedi verileri |
 | Index | Paratic | [paratic.com](https://www.paratic.com/) | BIST endeksleri |
 | FX | doviz.com | [doviz.com](https://www.doviz.com/) | Döviz kurları, altın, emtia |
 | Crypto | BtcTurk | [btcturk.com](https://www.btcturk.com/) | Kripto para verileri |
 | Fund | TEFAS | [tefas.gov.tr](https://www.tefas.gov.tr/) | Yatırım fonu verileri |
 | Inflation | TCMB | [tcmb.gov.tr](https://www.tcmb.gov.tr/) | Enflasyon verileri |
 | KAP | KAP | [kap.org.tr](https://www.kap.org.tr/) | Şirket bilgileri |
+| TCMB | TCMB | [tcmb.gov.tr](https://www.tcmb.gov.tr/) | Merkez Bankası kurları |
+| Eurobond | Ziraat | [ziraatbank.com.tr](https://www.ziraatbank.com.tr/) | Eurobond verileri |
 | EconomicCalendar | doviz.com | [doviz.com](https://www.doviz.com/) | Ekonomik takvim |
 | Bond | doviz.com | [doviz.com](https://www.doviz.com/) | Tahvil getirileri |
 | Screener | İş Yatırım | [isyatirim.com.tr](https://www.isyatirim.com.tr/) | Hisse tarama |
