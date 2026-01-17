@@ -45,7 +45,7 @@ async function testFX() {
 }
 
 async function testTicker() {
-    console.log('\n📈 TICKER (Paratic)');
+    console.log('\n📈 TICKER (TradingView)');
     console.log('─'.repeat(60));
     try {
         const stock = new Ticker('THYAO');
@@ -235,53 +235,93 @@ async function testBonds() {
     } catch (error) { console.error('Error:', error); }
 }
 
-async function testScreener() {
-    console.log('\n🔍 STOCK SCREENER (İş Yatırım)');
-    console.log('─'.repeat(60));
-    try {
-        // Get available sectors
-        const sectorList = await sectors();
-        console.log(`Available Sectors: ${sectorList.length}`);
-        console.log(`Sample: ${sectorList.slice(0, 5).join(', ')}...`);
+    async function testScreener() {
+        console.log('\n🔍 STOCK SCREENER (İş Yatırım)');
+        console.log('─'.repeat(60));
+        try {
+            // Get available sectors
+            const sectorList = await sectors();
+            console.log(`Available Sectors: ${sectorList.length}`);
+            console.log(`Sample: ${sectorList.slice(0, 5).join(', ')}...`);
+    
+            // Use template
+            const highDivStocks = await screenStocks({ template: 'high_dividend' });
+            console.log(`\nHigh Dividend Stocks: ${highDivStocks.length}`);
+            if (highDivStocks.length > 0) {
+                console.log('Sample:');
+                highDivStocks.slice(0, 3).forEach(stock => {
+                    console.log(`  ${stock.symbol}: ${stock.name}`);
+                });
+            }
+    
+            // Custom filter with fluent API
+            const screener = new Screener();
+            const largeCapStocks = await screener
+                .addFilter('market_cap', { min: 215000 })
+                .run();
+            console.log(`\nLarge Cap Stocks (>215B TL): ${largeCapStocks.length}`);
+            if (largeCapStocks.length > 0) {
+                console.log('Sample:', largeCapStocks.slice(0, 3).map(s => s.symbol).join(', '));
+            }
+        } catch (error) { console.error('Error:', error); }
+    }
 
-        // Use template
-        const highDivStocks = await screenStocks({ template: 'high_dividend' });
-        console.log(`\nHigh Dividend Stocks: ${highDivStocks.length}`);
-        if (highDivStocks.length > 0) {
-            console.log('Sample:');
-            highDivStocks.slice(0, 3).forEach(stock => {
-                console.log(`  ${stock.symbol}: ${stock.name}`);
-            });
-        }
+    async function testTCMBRates() {
+        console.log('\n💹 TCMB RATES');
+        console.log('─'.repeat(60));
+        try {
+            const { TCMB } = await import('../src/tcmb.js');
+            const tcmb = new TCMB();
+            
+            const policy = await tcmb.getPolicyRate();
+            console.log('Policy Rate:', JSON.stringify(policy, null, 2));
+            
+            const overnight = await tcmb.getOvernightRates();
+            console.log('Overnight Rates:', JSON.stringify(overnight, null, 2));
 
-        // Custom filter with fluent API
-        const screener = new Screener();
-        const largeCapStocks = await screener
-            .addFilter('market_cap', { min: 215000 })
-            .run();
-        console.log(`\nLarge Cap Stocks (>215B TL): ${largeCapStocks.length}`);
-        if (largeCapStocks.length > 0) {
-            console.log('Sample:', largeCapStocks.slice(0, 3).map(s => s.symbol).join(', '));
-        }
-    } catch (error) { console.error('Error:', error); }
-}
+            const all = await tcmb.getAllRates();
+            console.log('All Rates Count:', all.length);
+        } catch (error) { console.error('Error:', error); }
+    }
+
+    async function testEurobonds() {
+        console.log('\n🇪🇺 EUROBONDS (Ziraat)');
+        console.log('─'.repeat(60));
+        try {
+            const { Eurobond } = await import('../src/eurobond.js');
+            const eurobond = new Eurobond();
+
+            const list = await eurobond.getList();
+            console.log(`Total Eurobonds: ${list.length}`);
+            
+            if (list.length > 0) {
+                console.log('Sample:', JSON.stringify(list.slice(0, 2), null, 2));
+            }
+
+            const usdList = await eurobond.getList('USD');
+            console.log(`USD Eurobonds: ${usdList.length}`);
+        } catch (error) { console.error('Error:', error); }
+    }
+
 
 async function main() {
     console.log('🚀 borsajs v0.2.0 API Test');
     console.log('═'.repeat(60));
 
-    await testCrypto();
-    await testFX();
+    // await testCrypto();
+    // await testFX();
     await testTicker();
-    await testIndex();
-    await testFund();
-    await testInflation();
-    await testSymbols();
-    await testKap();
-    await testViop();
-    await testEconomicCalendar();
-    await testBonds();
-    await testScreener();
+    // await testIndex();
+    // await testFund();
+    // await testInflation();
+    // await testSymbols();
+    // await testKap();
+    // await testViop();
+    // await testEconomicCalendar();
+    // await testBonds();
+    await testTCMBRates();
+    await testEurobonds();
+    // await testScreener();
 
     console.log('\n' + '═'.repeat(60));
     console.log('✅ All tests completed!');
